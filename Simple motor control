@@ -1,0 +1,27 @@
+int lmotorPin = 40;
+int rmotorPin = 37;
+void setup()
+{
+  pinMode(lmotorPin, OUTPUT);
+  pinMode(rmotorPin, OUTPUT);
+  digitalWrite(lmotorPin, LOW);
+  digitalWrite(rmotorPin, LOW);
+}
+void loop()
+{
+  int onTime = 5;   // motor is on for 5ms, change it to see the effect of speed
+  int offTime = 20; // motor is off for 20ms
+  digitalWrite(lmotorPin, HIGH);
+  digitalWrite(rmotorPin, HIGH);
+  delay(onTime);  //on
+  digitalWrite(lmotorPin, LOW);
+  digitalWrite(rmotorPin, LOW);
+  delay(offTime);  //off
+}
+
+
+
+
+
+
+
