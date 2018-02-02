@@ -1,0 +1,22 @@
+/* In the setup function we initialize serial communication and set the external LED on PWM pin 19 as OUTPUT. You can use a different LED if you prefer. Connect the photoresistor to pin 2.*/
+void setup()
+{
+  Serial.begin(9600); // initialize serial communication 
+  pinMode(17, OUTPUT); // sets the LED on pin 19 to output
+}
+
+/* In the loop section we will read the photoresistor analog value then we will use the map() and constrain() functions to adjust the range for PWM. When the photoresistor is dark the LED will turn on, you can cover the photoresistor with your hand to block out light.
+ */
+void loop()
+{
+  int lightLevel = analogRead(2); // Read the light level from analog pin 2
+  delay(500); // delay for 1 millisecond for smoothness
+  Serial.println(lightLevel); // Print the analog value to Serial
+  // adjust the value 0 to max resolution to span 0 to 255
+  if (lightLevel<=450){
+    digitalWrite(17, HIGH);
+  }
+  else{
+    digitalWrite(17, LOW);
+  }
+}
