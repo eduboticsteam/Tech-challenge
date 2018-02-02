@@ -1,0 +1,25 @@
+Reads an analog input on pin A3, prints the result to the serial monitor.
+Attach the center pin of a potentiometer to pin A15 (P 6.0), and the outside pins to ~3V and GND.
+Hardware Required: 1.MSP-EXP430G2 LaunchPad 2.10-kilohm Potentiometer 3. hook-up wire
+// the setup routine runs once when you press reset:
+void setup() {
+// initialize serial communication at 9600 bits per second:
+Serial.begin(9600); // msp430g2231 must use 4800
+}
+// the loop routine runs over and over again forever:
+void loop() {
+// read the input on analog pin A15:
+int sensorValue = analogRead(A15);
+//convert sensor value that goes from 0 to 1023 to volatage values by equation below
+float voltage = sensorValue * (3.0/1023.0);
+// print out the value you read:
+Serial.println(voltage);
+delay(1000); // delay in between reads for stability
+}
+After uploading the code into MSP432, press serial monitor (in the top right to see the results)
+
+
+
+
+
+
