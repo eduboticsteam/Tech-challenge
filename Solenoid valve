@@ -1,0 +1,32 @@
+1.	Get grounded and discharge all static electricity you could have on you. I work on conductive foam and I always touch some part of my working bench mostly made of steel.
+2.	Put your MOSFET in your breadboard. The TO-220 packaging may need a little push to get the leads in the breadboard.
+3.	With the black part of the MOSFET (with the writing) facing you, the pin on the left is the GATE, the one in the middle is the DRAIN and the one on the right is the SOURCE.
+4.	Connect your Arduino digital pin 2 to the GATE
+5.	Connect the positive terminal of the 12V battery to the positive side of the solenoid
+6.	Connect the negative terminal of the solenoid to the DRAIN
+7.	Connect the SOURCE to the negative terminal of the battery
+If you chose to use a LED :
+1.	Stick the LED in the breadboard
+2.	Stick the resistor in the breadboard
+3.	Connect the resistor to your Arduino digital pin 10
+4.	Connect the negative terminal of you LED to GND
+Diode should be connected between the solenoid terminals, so that the little line on the diode is closest to the positive terminal of the solenoid. =
+
+int ledPin = 10;      // Connect the pin to Arduino pin 10
+int mosfetPin = 2;    // Connect the MOSFeT Gate (first pin on the left, when writing on the chip is facing you) to Arduino pin 2
+
+void setup()
+{
+  pinMode(ledPin, OUTPUT);
+  pinMode(mosfetPin, OUTPUT);
+}
+
+void loop()
+{
+ digitalWrite(ledPin, HIGH);
+ digitalWrite(mosfetPin, HIGH);
+ delay(60000);                    // Will turn both the LED and the MOSFET on for 60s, it gives you plenty of time to see if water is flowing as expected!
+ digitalWrite(ledPin, LOW);
+ digitalWrite(mosfetPin, LOW);
+ delay(5000);                     // Will shut down everything for 5s and restart.
+}
