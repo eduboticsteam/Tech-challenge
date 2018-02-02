@@ -1,0 +1,38 @@
+The ultrasonic sensor measures the distance to an obstacle, This distance is translated to a tone. As the object appears nearer the tone frequency increases.
+
+const int TRIG = 12;
+const int ECHO = 13;
+void setup(){
+ pinMode(TRIG, OUTPUT);
+ pinMode(ECHO, INPUT);
+  Serial.begin(9600);
+}
+void loop(){
+ long duration, inches, cm;
+ digitalWrite(TRIG, LOW);
+ delayMicroseconds(2);
+ digitalWrite(TRIG, HIGH);
+ delayMicroseconds(20);
+ digitalWrite(TRIG, LOW);
+ duration = pulseIn(ECHO, HIGH);
+ inches = duration / 74 / 2 ;
+ cm = duration / 29 / 2 ;
+ Serial.print(inches);
+ Serial.print("in, ");
+ Serial.print(cm);
+ Serial.print("cm");
+ Serial.println();
+ if(cm < 20){   // if distance is less than 20cm
+ tone(10, (20 - cm) * 170);  // 10 is pin number and frequency input is given by formula (20 - cm) * 170
+// for eg: if distance is 10cm, the frequency of tone is (20-10)*170 = 1700Hz
+ }else{
+ noTone(10);  // no tone
+ }
+ delay(400);
+}
+
+
+
+
+
+
