@@ -1,0 +1,56 @@
+
+//Right motor pins
+#define MRSpeed 40  // for controlling speed
+#define MRDir 39        // for direction
+#define MRSleep 38
+//left motor pins
+#define MLSpeed 37
+#define MLDir 36
+#define MLSleep 35
+//Ultrasonic sensor
+#define trigPin 12
+#define echoPin 13
+const int ledPin =  14;
+void setup() {
+  pinMode(MRSpeed, OUTPUT);
+  pinMode(MRDir, OUTPUT);
+  pinMode(MRSleep, OUTPUT);
+  digitalWrite(MRSleep, 0);
+  
+  pinMode(MLSpeed, OUTPUT);
+  pinMode(MLDir, OUTPUT);
+  pinMode(MLSleep, OUTPUT);
+  digitalWrite(MLSleep, 1);
+  
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+}
+void loop() {
+long duration;
+float distance;
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(20);
+digitalWrite(trigPin, LOW);
+delayMicroseconds(5);
+duration = pulseIn(echoPin, HIGH);
+distance = (duration/2)*0.034;   
+Serial.println(distance);
+ 
+if (distance<=30){                      // if distance is less than 30cm
+  digitalWrite(ledPin, HIGH);    // LED on
+  digitalWrite(MRDir, 1);          // reverse the direction
+  digitalWrite(MLDir, 0);
+  delay(200);
+  analogWrite(MRSpeed, 40);
+  analogWrite(MLSpeed, 20);
+}
+else{
+  digitalWrite(ledPin, LOW);      //LED off
+  analogWrite(MRSpeed, 20);   
+  digitalWrite(MRDir, 0);
+  analogWrite(MLSpeed, 20);
+  digitalWrite(MLDir, 0);
+}
+}
+
