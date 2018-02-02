@@ -1,0 +1,18 @@
+Aim: Turns on an LED on for one second, then off for one second, repeatedly.
+Hardware required: MSP432 TI launchpad
+//see pins_energia.h for more LED definitions
+#define LED GREEN_LED                        // you can also use #define LED RED_LED
+// the setup routine runs once when you press reset:
+void setup() {                
+pinMode(LED, OUTPUT);                      // initialize the digital pin as an output.
+}
+// the loop routine runs over and over again forever:
+void loop() {
+  digitalWrite(LED, HIGH);                    // turn the LED on by making the voltage HIGH
+  delay(1000);                                        // wait for a second
+  digitalWrite(LED, LOW);                   // turn the LED off by making the voltage LOW
+  delay(1000);                                       // wait for a second
+}
+
+
+
