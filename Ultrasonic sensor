@@ -1,0 +1,45 @@
+
+/* This sketch reads ultrasonic rangefinder and returns the distance to the closest object in range. To do this, it sends a pulse to the sensor to initiate a reading, then listens for a pulse to return.  The length of the returning pulse is proportional to the distance of the object from the sensor.
+The circuit:
+Sensor 	MSP 432
+TRIG	12
+ECHO	13
+GND	GND
+VCC	5V
+
+#define trigPin 12  // connect TRIG pin on sensor to pin 12 on MSP432
+#define echoPin 13  // connect TRIG pin on sensor to pin 13 on MSP432
+const int ledPin =  14;
+void setup() {
+  Serial.begin(9600);      // initialize serial communication:
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(ledPin, OUTPUT);      
+}
+void loop()
+{
+// establish variables for duration of the ping, and the distance result in inches and centimeters:
+long duration;
+// The ultrasound sensor is triggered by a HIGH pulse of 2 or more microseconds. Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
+float distance;
+int conversion;
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(20);
+digitalWrite(trigPin, LOW);
+delayMicroseconds(5);
+distance = (duration/2)*0.034;   // convert the time into a distance in cm
+
+if (distance<=50){
+digitalWrite(ledPin, HIGH);  // turn LED on:    
+} 
+else {
+digitalWrite(ledPin, LOW);    // turn LED off:
+}
+Serial.println(distance);
+delay(500);
+}
+
+
+
+
+
