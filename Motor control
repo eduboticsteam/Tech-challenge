@@ -1,0 +1,34 @@
+//Right motor pins
+#define MRSpeed 40    // for generating PWM signal
+#define MRDir 39          // for changing direction, forward and backward
+#define MRSleep 38      // 
+//left motor pins
+#define MLSpeed 37
+#define MLDir 36
+#define MLSleep 35
+void setup() {
+  pinMode(MRSpeed, OUTPUT);
+  pinMode(MRDir, OUTPUT);
+  pinMode(MRSleep, OUTPUT);
+  digitalWrite(MRSleep, 0);
+  pinMode(MLSpeed, OUTPUT);
+  pinMode(MLDir, OUTPUT);
+  pinMode(MLSleep, OUTPUT);
+  digitalWrite(MLSleep, 0);
+}
+void loop() {
+  // Run forward at about half speed for 2 seconds. 
+  analogWrite(MRSpeed, 125);  //255 is full speed PWM signal
+  digitalWrite(MRDir, 0);  
+  analogWrite(MLSpeed, 125);
+  digitalWrite(MLDir, 0);
+  delay(2000);
+  //run backward at full speed. 
+  digitalWrite(MRDir, 1);
+  digitalWrite(MLDir, 1);
+  delay(200);
+  analogWrite(MRSpeed, 255);
+  analogWrite(MLSpeed, 255);
+  delay(2000);
+}
+
