@@ -1,0 +1,102 @@
+//Right motor pins
+#define MRSpeed 40
+#define MRDir 39
+#define MRSleep 38
+
+//left motor pins
+#define MLSpeed 37
+#define MLDir 36
+#define MLSleep 35
+//Ultrasonic sensor left
+#define trigPinLeft 12
+#define echoPinLeft 13
+//Ultrasonic sensor right
+#define trigPinRight 14
+#define echoPinRight 15
+//LED's
+const int ledPinRed = 7;
+const int ledPinGreen = 8;
+void setup() {
+  pinMode(MRSpeed, OUTPUT);
+  pinMode(MRDir, OUTPUT);
+  pinMode(MRSleep, OUTPUT);
+  digitalWrite(MRSleep, 1);
+  
+  pinMode(MLSpeed, OUTPUT);
+  pinMode(MLDir, OUTPUT);
+  pinMode(MLSleep, OUTPUT);
+  digitalWrite(MLSleep, 1);
+  
+  pinMode(trigPinLeft, OUTPUT);
+  pinMode(echoPinLeft, INPUT);
+  pinMode(trigPinRight, OUTPUT);
+  pinMode(echoPinRight, INPUT);
+  
+  pinMode(ledPinRed, OUTPUT);     
+  pinMode(ledPinGreen, OUTPUT);   
+  Serial.begin(9600);
+}
+
+void loop() {
+long durationLeft,durationRight;
+float distanceLeft, distanceRight;
+//LEFT
+digitalWrite(trigPinLeft, HIGH);
+delayMicroseconds(20);
+digitalWrite(trigPinLeft, LOW);
+delayMicroseconds(5);
+durationLeft = pulseIn(echoPinLeft, HIGH);
+distanceLeft = (durationLeft/2)*0.034;   
+Serial.println(distanceLeft);
+//RIGHT
+digitalWrite(trigPinRight, HIGH);
+delayMicroseconds(20);
+digitalWrite(trigPinRight, LOW);
+delayMicroseconds(5);
+durationRight = pulseIn(echoPinRight, HIGH);
+distanceRight = (durationRight/2)*0.034;   
+Serial.println(distanceRight);
+
+//Case1: no obstacle
+if (distanceLeft >= 10 && distanceRight >= 10.) 
+  {
+   digitalWrite(MRDir, 0); // don't change direction continue going
+   digitalWrite(MLDir, 0); // don't change direction continue going
+   delay(2);
+   analogWrite(MRSpeed, 15); //speed
+   analogWrite(MLSpeed, 15);
+  }
+ //Case2: obstacle on left
+else if (distanceLeft < 10 && distanceRight >= 10) //turn right
+{        
+   digitalWrite(MRDir, 1); // change direction to backward
+   digitalWrite(MLDir, 0); // don't change direction continue going
+   delay(2);
+   analogWrite(MRSpeed, 15); //speed
+   analogWrite(MLSpeed, 15);
+}  
+// Case3: obstacle on right
+else if (distanceLeft >=10 && distanceRight < 10) //turn left
+{        
+   digitalWrite(MRDir, 0); // change direction to backward
+   digitalWrite(MLDir, 1); // don't change direction continue going
+   delay(2);
+   analogWrite(MRSpeed, 15); //speed
+   analogWrite(MLSpeed, 15);
+}
+// Case4: obstacle on both directions
+else if (distanceLeft < 10 && distanceRight < 10)  //turn left
+{        
+   digitalWrite(MRDir, 1); // change direction to backward
+   digitalWrite(MLDir, 1); // don't change direction continue going
+   delay(2);
+   analogWrite(MRSpeed, 15); //speed
+   analogWrite(MLSpeed, 15);
+}
+delay(10);
+}
+
+
+
+
+
